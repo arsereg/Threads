@@ -2,16 +2,6 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author arser
- */
 public class objetito implements Runnable{
     
     private Thread t;
@@ -33,11 +23,19 @@ public class objetito implements Runnable{
                 i = generarNumeroAleatorio();
                 compararMayor(i);
                 Thread.sleep(3000);
-                System.out.println("Esta vez salio " + i);
             } catch (InterruptedException ex) {
                 Logger.getLogger(objetito.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public void iniciar(){
+        t = new Thread(this, "Cuack");
+        t.start();
+    }
+    
+    public boolean isAlive(){
+        return t.isAlive();
     }
     
     public boolean isEjecutando(){
@@ -47,7 +45,7 @@ public class objetito implements Runnable{
     
     
     public void detener(){
-        ejecutando = false;
+        t.stop();
     }
     
     public void incrementar(){
