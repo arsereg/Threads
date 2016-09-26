@@ -6,14 +6,30 @@ public class Hilos{
     static boolean proseguir = true;
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintStream out = System.out;
-    static int maxThreads = 200;
-    static objetito[] objetos = new objetito[maxThreads];
+    static int maxThreads;
+    static objetito[] objetos;
     static int cantThreads = 0;
     static int threadSeleccionado = -1;
     
     
     
-   public static void main(String[] args)throws java.io.IOException{   
+   public static void main(String[] args)throws java.io.IOException{
+       boolean cantThreadsValido = true;
+       do{
+           cantThreadsValido = true;
+           try{
+                out.println("Digite la cantidad de Threads que desea crear");
+                maxThreads = Integer.parseInt(in.readLine());
+                if(maxThreads < 0){
+                    out.println("Digite un numero positivo");
+                    cantThreadsValido = false;
+                }
+           }catch(Exception e){
+               out.println("ingrese un valor valido por favor");
+               cantThreadsValido = false;
+           }
+       }while(!cantThreadsValido);
+       objetos = new objetito[maxThreads];
        for(int i = 0; i < maxThreads; i++){
            crearThread(i);
        }
