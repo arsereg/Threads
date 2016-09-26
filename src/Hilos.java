@@ -6,7 +6,7 @@ public class Hilos{
     static boolean proseguir = true;
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintStream out = System.out;
-    static int maxThreads = 2;
+    static int maxThreads = 200;
     static objetito[] objetos = new objetito[maxThreads];
     static int cantThreads = 0;
     static int threadSeleccionado = -1;
@@ -52,7 +52,6 @@ public class Hilos{
                     detenerTodo();
                     obtenerResultado();
                     desplegarDespedida();
-                    System.exit(0);
                     break;
             }
        }while(accion != 7);

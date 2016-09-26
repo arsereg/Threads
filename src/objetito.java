@@ -22,7 +22,7 @@ public class objetito implements Runnable{
             try {
                 i = generarNumeroAleatorio();
                 compararMayor(i);
-                Thread.sleep(3000);
+                Thread.sleep(0);
             } catch (InterruptedException ex) {
                 Logger.getLogger(objetito.class.getName()).log(Level.SEVERE, null, ex);
             }
