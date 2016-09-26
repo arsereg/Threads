@@ -6,8 +6,8 @@ public class Hilos{
     static boolean proseguir = true;
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintStream out = System.out;
-    static int maxThreads = 100;
-    static objetito[] procesos = new objetito[maxThreads];
+    static int maxThreads = 3000;
+    static Thread[] procesos = new Thread[maxThreads];
     static int cantThreads = 0;
     static int threadSeleccionado = -1;
     
@@ -26,7 +26,8 @@ public class Hilos{
        out.println("Digite 3 para detener el thread");
        out.println("Digite 4 para detener todo");
        out.println("Digite 5 para iniciar todo");
-       out.println("Digite 6 para terminar el programa y ver el resultado");       
+       out.println("Digite 6 para Conocer el estado de un thread");
+       out.println("Digite 7 para terminar el programa y ver el resultado");       
             accion = Integer.parseInt(in.readLine());
             switch(accion){
                 case 1:
@@ -45,15 +46,20 @@ public class Hilos{
                     iniciarTodo();
                     break;
                 case 6:
+                    conocerStatusThread();
+                    break;
+                case 7:
+                    detenerTodo();
                     obtenerResultado();
                     desplegarDespedida();
+                    System.exit(0);
                     break;
             }
-       }while(accion != 6);
+       }while(accion != 7);
    }
    
    public static void crearThread(int pindice){
-       procesos[pindice] = new objetito();
+       procesos[pindice] = new Thread(new objetito("Cuack"));
        out.println("Thread " + pindice + " creado.");
        cantThreads++;
    }
@@ -67,6 +73,7 @@ public class Hilos{
    public static void iniciarTodo(){
        for(int i = 0; i < cantThreads; i++){
            ejecutarThread(i);
+           out.println("Thread " + i + "iniciado");
        }
    }
    
@@ -89,7 +96,8 @@ public class Hilos{
    }
    
    public static void ejecutarThread(int pthread){
-       procesos[pthread].start();
+       Thread proceso = new Thread(new objetito("Hola"));
+       proceso.start();     
        out.println("El thread " + pthread + " se ha iniciado");
    }
    
@@ -104,6 +112,7 @@ public class Hilos{
    
    public static void detenerThread(int pThread){
        procesos[pThread].stop();
+       
    }
    
    public static void desplegarDespedida(){
@@ -114,4 +123,21 @@ public class Hilos{
        int max = objetito.getMayor();
        out.println("El mayor generado fue " + max);
    }
+   
+   public static void conocerStatusThread()throws java.io.IOException{
+       out.println("Digite el thread del cual quiere ver el status.");
+       out.println(maxThreads -1 + " maximo");
+       int indice = Integer.parseInt(in.readLine());
+       boolean status = procesos[indice].isAlive();
+       String estado;
+       if(status){
+           estado = "corriendo";
+       }else{
+           estado = "apagado";
+       }
+       out.println();
+       out.println("El thread " + indice + " esta " + estado);
+       
+   }
+   
 }

@@ -1,3 +1,7 @@
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,26 +12,39 @@
  *
  * @author arser
  */
-public class objetito extends Thread{
+public class objetito implements Runnable{
     
+    private Thread t;
+    private String threadName;
     int i = 0;
     static int mayor = 0;
     static int cantProcesos = 0;
-    boolean ejecutando = true;
+    boolean ejecutando = false;
     
     
+    public objetito(String pthreadName){
+        threadName = pthreadName;
+    }
     
     public void run(){
-        iniciar();
-    }
-    
-    public void iniciar(){
-        boolean eject = true;
-        while(eject){
-            i = generarNumeroAleatorio();
-            compararMayor(i);
+        this.ejecutando = true;
+        while(ejecutando){
+            try {
+                i = generarNumeroAleatorio();
+                compararMayor(i);
+                Thread.sleep(3000);
+                System.out.println("Esta vez salio " + i);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(objetito.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
+    
+    public boolean isEjecutando(){
+        boolean resul = ejecutando;
+        return resul;
+    }
+    
     
     public void detener(){
         ejecutando = false;
